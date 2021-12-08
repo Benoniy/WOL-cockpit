@@ -1,11 +1,12 @@
 {
     "requires": {
-        "cockpit": "137"
+        "cockpit": "130"
     },
 
     "tools": {
         "index": {
-            "label": "Starter Kit"
+            "label": "Server Starter",
+            "order": 1
         }
     }
 }

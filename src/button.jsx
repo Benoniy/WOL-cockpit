@@ -19,31 +19,24 @@
 
 import cockpit from 'cockpit';
 import React from 'react';
-import { Alert, Card, CardTitle, CardBody } from '@patternfly/react-core';
 
-const _ = cockpit.gettext;
-
-export class Application extends React.Component {
+export class Button extends React.Component {
     constructor() {
         super();
-        this.state = { hostname: _("Unknown") };
+        this.state = { isToggleOn: true };
+        this.handleClick = this.handleClick.bind(this);
+    }
 
-        cockpit.file('/home/pi/wake_the_beast.sh').watch(content => {
-            this.setState({ hostname: content.trim() });
-        });
+    handleClick() {
+        cockpit.script("/home/pi/wake_the_beast.sh");
+        this.setState(prevState => ({
+            isToggleOn: !prevState.isToggleOn
+        }));
     }
 
     render() {
         return (
-            <Card>
-                <CardTitle>Starter Kit</CardTitle>
-                <CardBody>
-                    <Alert
-                        variant="info"
-                        title={ cockpit.format(_("Script $0"), this.state.hostname) }
-                    />
-                </CardBody>
-            </Card>
+            <button onClick={ this.handleClick }>Wake Up Gimley</button>
         );
     }
 }
